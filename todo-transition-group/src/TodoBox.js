@@ -5,7 +5,7 @@ import TodoList from './TodoList';
 import Footer from './Footer';
 import todos from './todos';
 
-const Box = styled.div`
+const Box = styled.main`
   min-width: 55rem;
   width: 50%;
   margin: 0 auto;
@@ -64,7 +64,9 @@ const CompleteAllButton = styled.button`
 class TodoBox extends Component {
   state = {
     todos,
-    completed: false
+    completed: false,
+    filter: 'all',
+    value: ''
   };
 
   handleAdd = text => {
@@ -101,20 +103,64 @@ class TodoBox extends Component {
     });
   };
 
+  handleClearCompleted = () => {
+    this.setState({
+      todos: this.state.todos.filter(todo => !todo.completed)
+    });
+  };
+
+  getFilteredTodos = () => {
+    const { value, filter } = this.state;
+
+    let todos = this.state.todos.filter(
+      todo =>
+        todo.text
+          .toLowerCase()
+          .replace(/[^\w\s]/gi, '')
+          .indexOf(value.toLowerCase()) !== -1
+    );
+
+    switch (filter) {
+      case 'active':
+        return todos.filter(todo => !todo.completed);
+      case 'completed':
+        return todos.filter(todo => todo.completed);
+      case 'all':
+      default:
+        return todos;
+    }
+  };
+
+  handleFilter = filter => {
+    this.setState({ filter });
+  };
+
+  handleValueChange = value => {
+    this.setState({ value });
+  };
+
   render() {
     return (
       <Box>
         <CompleteAllButton onClick={this.handleCompleteAll}>
           &rsaquo;
         </CompleteAllButton>
-        <TodoForm onAdd={this.handleAdd} />
+        <TodoForm
+          onAdd={this.handleAdd}
+          onFilter={this.handleFilter}
+          value={this.state.value}
+          onValueChange={this.handleValueChange}
+        />
         <TodoList
-          todos={this.state.todos}
+          todos={this.getFilteredTodos()}
           onDelete={this.handleDelete}
           onUpdate={this.handleUpdate}
         />
         <Footer
-          count={this.state.todos.filter(t => t.completed === false).length}
+          count={this.state.todos.filter(t => !t.completed).length}
+          onClearCompleted={this.handleClearCompleted}
+          filter={this.state.filter}
+          onFilter={this.handleFilter}
         />
       </Box>
     );

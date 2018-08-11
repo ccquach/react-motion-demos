@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Item = styled.li`
+const Wrapper = styled.div`
   padding: 1rem 6rem;
   position: relative;
-
-  &:not(:last-child) {
-    border-bottom: 1px solid #ecf0f1;
-  }
+  overflow: hidden;
 
   &:hover > button {
     opacity: 1;
@@ -16,32 +13,44 @@ const Item = styled.li`
   }
 `;
 
-const Text = styled.span`
-  text-decoration: ${({ completed }) => (completed ? 'line-through' : 'none')};
-  opacity: ${({ completed }) => (completed ? 0.3 : 1)};
+const Label = styled.label`
+  vertical-align: middle;
+  position: relative;
+
+  &::before {
+    content: '';
+    text-align: center;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: -4.5rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #ecf0f1;
+    transition: color 0.3s ease-out;
+  }
 `;
 
-const Checkmark = styled.span`
-  text-align: center;
-  width: 3rem;
-  height: 3rem;
-  border: 1px solid ${({ completed }) => (completed ? '#2ecc71' : '#ecf0f1')};
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 3%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: ${({ completed }) => (completed ? '#2ecc71' : '#ecf0f1')};
-  transition: color 0.3s ease-out;
+const Checkmark = styled.input.attrs({
+  type: 'checkbox'
+})`
+  display: none;
 
-  ${({ completed }) =>
-    completed &&
-    `
+  &:checked + label {
+    text-decoration: line-through;
+
+    & > span {
+      opacity: 0.3;
+    }
+
     &::before {
       content: '\\2713';
-    }
-  `};
+      color: #2ecc71;
+      border: 1px solid currentColor;
+  }
 `;
 
 const DeleteButton = styled.button`
@@ -63,21 +72,31 @@ const DeleteButton = styled.button`
   }
 `;
 
-const TodoItem = ({ text, completed, onDelete, onUpdate }) => {
-  return (
-    <Item>
-      <Checkmark completed={completed} onClick={onUpdate} />
-      <Text completed={completed}>{text}</Text>
-      <DeleteButton onClick={onDelete}>&times;</DeleteButton>
-    </Item>
-  );
-};
+class TodoItem extends Component {
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func.isRequired
+  };
 
-TodoItem.propTypes = {
-  text: PropTypes.string.isRequired,
-  completed: PropTypes.bool.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired
-};
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return this.props.completed !== nextProps.completed;
+  };
+
+  render() {
+    const { id, text, completed, onDelete, onUpdate } = this.props;
+    return (
+      <Wrapper>
+        <Checkmark id={id} checked={completed} onChange={onUpdate} />
+        <Label htmlFor={id}>
+          <span>{text}</span>
+        </Label>
+        <DeleteButton onClick={onDelete}>&times;</DeleteButton>
+      </Wrapper>
+    );
+  }
+}
 
 export default TodoItem;

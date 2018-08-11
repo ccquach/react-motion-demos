@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const Form = styled.form`
   width: 100%;
-  height: 5rem;
 `;
 
 const Input = styled.input`
@@ -12,7 +11,7 @@ const Input = styled.input`
   height: 100%;
   border: none;
   background-color: #f6f8f8;
-  padding: 1rem 2rem 1rem 6rem;
+  padding: 1.5rem 2rem 1.5rem 6rem;
   font-size: inherit;
   font-family: inherit;
   color: #272727;
@@ -25,19 +24,20 @@ const Input = styled.input`
 
 class TodoForm extends Component {
   static propTypes = {
-    onAdd: PropTypes.func.isRequired
+    onAdd: PropTypes.func.isRequired,
+    onFilter: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
+    onValueChange: PropTypes.func.isRequired
   };
 
-  state = { text: '' };
-
   handleChange = e => {
-    this.setState({ text: e.target.value });
+    this.props.onValueChange(e.target.value);
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onAdd(this.state.text);
-    this.setState({ text: '' });
+    this.props.onAdd(this.props.value);
+    this.props.onValueChange('');
   };
 
   render() {
@@ -46,7 +46,7 @@ class TodoForm extends Component {
         <Input
           type="text"
           onChange={this.handleChange}
-          value={this.state.text}
+          value={this.props.value}
           placeholder="What needs to be done?"
           autoFocus
         />
