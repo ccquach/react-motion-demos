@@ -10,12 +10,6 @@ const List = styled.ul`
   background-color: #fff;
 `;
 
-const Item = styled.li`
-  &:not(:last-child) {
-    border-bottom: 1px solid #ecf0f1;
-  }
-`;
-
 class TodoList extends Component {
   static propTypes = {
     todos: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -49,8 +43,8 @@ class TodoList extends Component {
     return this.props.todos.map(todo => ({
       key: `${todo.id}-transition`,
       style: {
-        height: spring(60, presets.gentle),
-        opacity: spring(1, presets.gentle)
+        height: spring(60, presets.wobbly),
+        opacity: spring(1, presets.wobbly)
       },
       data: todo
     }));
@@ -69,7 +63,7 @@ class TodoList extends Component {
           <List>
             {interpolated.map(
               ({ key, style, data: { id, text, completed } }) => (
-                <Item key={key} style={style}>
+                <li key={key} style={style}>
                   <TodoItem
                     id={id}
                     text={text}
@@ -77,7 +71,7 @@ class TodoList extends Component {
                     onDelete={onDelete.bind(this, id)}
                     onUpdate={onUpdate.bind(this, id)}
                   />
-                </Item>
+                </li>
               )
             )}
           </List>

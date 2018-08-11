@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
+  height: 100%;
+  width: 100%;
   padding: 1rem 6rem;
   position: relative;
   overflow: hidden;
+  border-bottom: 1px solid #ecf0f1;
 
   &:hover > button {
     opacity: 1;

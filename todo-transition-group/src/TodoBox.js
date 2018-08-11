@@ -12,34 +12,9 @@ const Box = styled.main`
   font-size: 2rem;
   position: relative;
   z-index: 1;
-
-  &,
-  &::before,
-  &::after {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    background-color: #fff;
-  }
-
-  &::before,
-  &::after {
-    content: '';
-    height: 100%;
-    position: absolute;
-  }
-
-  &::before {
-    width: 98%;
-    z-index: -1;
-    bottom: -5px;
-    left: 1%;
-  }
-
-  &::after {
-    width: 96%;
-    z-index: -2;
-    bottom: -10px;
-    left: 2%;
-  }
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24),
+    0 10px 0 -5px #f1f1f1, 0 10px 1px -4px rgba(0, 0, 0, 0.24),
+    0 20px 0 -10px #f1f1f1, 0 20px 1px -9px rgba(0, 0, 0, 0.24);
 `;
 
 const CompleteAllButton = styled.button`
