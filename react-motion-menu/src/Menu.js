@@ -3,6 +3,7 @@ import { StaggeredMotion, spring } from 'react-motion';
 import styled from 'styled-components';
 import Icon from './Icon';
 import icons from './icons';
+import { distributeFields } from './helpers/distributeFields';
 
 const Container = styled.nav`
   max-width: 114rem;
@@ -23,10 +24,7 @@ const Item = styled.li`
   position: absolute;
 `;
 
-const Toggle = styled.button`
-  background: transparent;
-  border: none;
-  cursor: pointer;
+const Toggle = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -35,6 +33,7 @@ const Toggle = styled.button`
 
 class App extends Component {
   state = {
+    icons: distributeFields(icons),
     open: false
   };
 
@@ -43,10 +42,10 @@ class App extends Component {
   };
 
   getDefaultStyles = () => {
-    return icons.map(({ type, style: { x, y } }) => ({
+    return this.state.icons.map(({ type, style: { x, y } }) => ({
       type,
-      top: +y,
-      left: +x,
+      top: y,
+      left: x,
       scale: 0
     }));
   };
@@ -61,7 +60,7 @@ class App extends Component {
     return prevStyles.map((styles, i) => {
       // counter-clockwise animation on close
       if (val === 0) {
-        return i === 6
+        return i === icons.length - 1
           ? { ...styles, scale: spring(val, config.close) }
           : {
               ...styles,
@@ -93,7 +92,7 @@ class App extends Component {
                   style={{
                     top: `${top}rem`,
                     left: `${left}rem`,
-                    transform: `translate(-50%, -50%) scale(${scale})`
+                    transform: `scale(${scale})`
                   }}
                 >
                   <Icon type={type} />
