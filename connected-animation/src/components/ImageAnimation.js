@@ -3,15 +3,19 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Motion, spring } from 'react-motion';
 
-const Image = styled.div`
-  background: url(${props => props.image});
+// To avoid generating too many classes, set property values passed as props inside style attribute
+const Image = styled.div.attrs({
+  style: props => ({
+    backgroundImage: `url(${props.image})`,
+    width: `${props.width}px`,
+    height: `${props.height}px`,
+    left: `${props.x}px`,
+    top: `${props.y}px`
+  })
+})`
   background-size: cover;
   background-position: center;
-  width: ${props => props.width}px;
-  height: ${props => props.height}px;
   position: absolute;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
 `;
 
 class ImageAnimation extends Component {

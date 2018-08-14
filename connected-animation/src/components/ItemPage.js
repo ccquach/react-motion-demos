@@ -27,7 +27,7 @@ ItemPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  heroStartingStyle: state.style.startingHeroStyle
+  heroStartingStyle: state.startingHeroStyle
 });
 
 export default connect(

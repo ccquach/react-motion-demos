@@ -5,6 +5,7 @@ import ImageAnimation from './ImageAnimation';
 
 const Wrapper = styled.div``;
 
+// ImageAnimation is absolutely positioned, so push body text down the size of the image
 const HeroSpace = styled.div`
   width: 100%;
   height: 400px;
@@ -14,9 +15,17 @@ const Paper = styled.div`
   padding: 24px;
 `;
 
-const Name = styled.h4``;
+const Name = styled.h4`
+  text-transform: capitalize;
+  font-size: 22px;
+  font-weight: 300;
+  margin-top: 10px;
+`;
 
-const Description = styled.p``;
+const Description = styled.p`
+  font-size: 14px;
+  line-height: 1.7;
+`;
 
 const getWindowWidth = () => {
   const w = window;

@@ -15,13 +15,18 @@ class App extends Component {
     const x = e.target.offsetLeft;
     const y = e.target.offsetTop - window.scrollY;
     // console.log(item);
+    console.log({ width, height, x, y });
+
+    // update state with selected item
     this.props.setHeroStartingStyle({ width, height, x, y });
-    // redirect to item page
+    // redirect to item page, passing selected item object
     this.props.push({ pathname: '/item', state: { item } });
+    window.scrollTo(0, 0);
   };
 
   render() {
     return (
+      // Pass history object as a prop to ConnectedRouter
       <ConnectedRouter history={this.props.history}>
         <Switch>
           <Route

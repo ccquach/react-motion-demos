@@ -5,11 +5,22 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  max-width: 1140px;
+  margin: 0 auto;
 `;
 
 const Item = styled.div`
-  width: 30%;
-  padding: 24px;
+  flex: 0 0 30%;
+  margin: 1.66%;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-out;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const Image = styled.div`
@@ -20,7 +31,11 @@ const Image = styled.div`
   background-position: center;
 `;
 
-const Name = styled.h4``;
+const Name = styled.h4`
+  text-align: center;
+  text-transform: capitalize;
+  font-weight: 300;
+`;
 
 const ItemGrid = ({ items, onItemClick }) => (
   <Wrapper>

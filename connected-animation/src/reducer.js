@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { SET_HERO_STARTING_STYLE } from './actionTypes';
 
 const initialState = {
@@ -10,7 +9,7 @@ const initialState = {
   }
 };
 
-const style = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case SET_HERO_STARTING_STYLE:
       return {
@@ -26,9 +25,3 @@ const style = (state = initialState, action) => {
       return state;
   }
 };
-
-const rootReducer = combineReducers({
-  style
-});
-
-export default rootReducer;
