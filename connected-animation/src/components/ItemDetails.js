@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ImageAnimation from './ImageAnimation';
+import TitleAnimation from './TitleAnimation';
+import DescriptionAnimation from './DescriptionAnimation';
 
 const Wrapper = styled.div``;
 
@@ -13,18 +15,6 @@ const HeroSpace = styled.div`
 
 const Paper = styled.div`
   padding: 24px;
-`;
-
-const Name = styled.h4`
-  text-transform: capitalize;
-  font-size: 22px;
-  font-weight: 300;
-  margin-top: 10px;
-`;
-
-const Description = styled.p`
-  font-size: 14px;
-  line-height: 1.7;
 `;
 
 const getWindowWidth = () => {
@@ -50,8 +40,8 @@ const ItemDetails = ({ item, starting }) => {
         ending={{ width: getWindowWidth(), height: 400, x: 0, y: 0 }}
       />
       <Paper>
-        <Name>{item.name}</Name>
-        <Description>{item.description}</Description>
+        <TitleAnimation title={item.name} />
+        <DescriptionAnimation description={item.description} />
       </Paper>
     </Wrapper>
   );

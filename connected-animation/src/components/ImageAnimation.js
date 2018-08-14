@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Motion, spring } from 'react-motion';
@@ -18,41 +18,34 @@ const Image = styled.div.attrs({
   position: absolute;
 `;
 
-class ImageAnimation extends Component {
-  getDefaultStyles = starting => ({
-    x: starting.x,
-    y: starting.y,
-    width: starting.width,
-    height: starting.height
-  });
+// animation logic
+const getDefaultStyles = starting => ({
+  x: starting.x,
+  y: starting.y,
+  width: starting.width,
+  height: starting.height
+});
 
-  getStyles = ending => ({
-    x: spring(ending.x),
-    y: spring(ending.y),
-    width: spring(ending.width),
-    height: spring(ending.height)
-  });
+const getStyles = ending => ({
+  x: spring(ending.x),
+  y: spring(ending.y),
+  width: spring(ending.width),
+  height: spring(ending.height)
+});
 
-  render() {
-    const { image, starting, ending } = this.props;
-    return (
-      <Motion
-        defaultStyle={this.getDefaultStyles(starting)}
-        style={this.getStyles(ending)}
-      >
-        {style => (
-          <Image
-            x={style.x}
-            y={style.y}
-            width={style.width}
-            height={style.height}
-            image={image}
-          />
-        )}
-      </Motion>
-    );
-  }
-}
+const ImageAnimation = ({ image, starting, ending }) => (
+  <Motion defaultStyle={getDefaultStyles(starting)} style={getStyles(ending)}>
+    {style => (
+      <Image
+        x={style.x}
+        y={style.y}
+        width={style.width}
+        height={style.height}
+        image={image}
+      />
+    )}
+  </Motion>
+);
 
 ImageAnimation.propTypes = {
   image: PropTypes.string.isRequired,

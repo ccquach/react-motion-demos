@@ -15,7 +15,7 @@ class App extends Component {
     const x = e.target.offsetLeft;
     const y = e.target.offsetTop - window.scrollY;
     // console.log(item);
-    console.log({ width, height, x, y });
+    // console.log({ width, height, x, y });
 
     // update state with selected item
     this.props.setHeroStartingStyle({ width, height, x, y });
