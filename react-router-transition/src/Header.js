@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import FadeInLeft from './Animations/FadeInLeft';
 
 const Wrapper = styled.header`
   text-align: ${props => (props.align ? 'left' : 'center')};
@@ -10,15 +11,16 @@ const Wrapper = styled.header`
 const Heading = styled.h1`
   color: #b53471;
   font-size: 3.5rem;
-  font-weight: 300;
   letter-spacing: 1px;
   line-height: 1;
 `;
 
 const Header = ({ children, align }) => (
-  <Wrapper align={align ? align : null}>
-    <Heading>{children}</Heading>
-  </Wrapper>
+  <FadeInLeft>
+    <Wrapper align={align ? align : null}>
+      <Heading>{children}</Heading>
+    </Wrapper>
+  </FadeInLeft>
 );
 
 Header.propTypes = {

@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { StaggeredMotion, spring } from 'react-motion';
+
 import Header from './Header';
-import FadeInUp from './FadeInUp';
 import BackButton from './BackButton';
 import products from './seed';
+
+const CONFIG = { stiffness: 200, damping: 18 };
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,25 +39,55 @@ class Products extends Component {
     });
   };
 
+  // animation logic
+
+  getDefaultStyles = () => {
+    return products.map(() => ({
+      opacity: 0,
+      y: 100
+    }));
+  };
+
+  getStyles = prevStyles => {
+    return prevStyles.map((_, i) => {
+      return i === 0
+        ? { opacity: spring(1, CONFIG), y: spring(0, CONFIG) }
+        : {
+            opacity: spring(prevStyles[i - 1].opacity, CONFIG),
+            y: spring(prevStyles[i - 1].y, CONFIG)
+          };
+    });
+  };
+
   render() {
     return (
       <div>
         <BackButton location="/">Home</BackButton>
-        <FadeInUp>
-          <section>
-            <Header align="left">Products</Header>
-            <Wrapper>
-              {products.map(product => (
-                <Product
-                  key={product._id}
-                  onClick={this.handleClick.bind(this, product)}
-                >
-                  {product.name}
-                </Product>
-              ))}
-            </Wrapper>
-          </section>
-        </FadeInUp>
+        <section>
+          <Header align="left">Products</Header>
+
+          <StaggeredMotion
+            defaultStyles={this.getDefaultStyles()}
+            styles={this.getStyles}
+          >
+            {interpolated => (
+              <Wrapper>
+                {interpolated.map((styles, i) => (
+                  <Product
+                    key={products[i]._id}
+                    style={{
+                      opacity: styles.opacity,
+                      transform: `translateY(${styles.y}px)`
+                    }}
+                    onClick={this.handleClick.bind(this, products[i])}
+                  >
+                    {products[i].name}
+                  </Product>
+                ))}
+              </Wrapper>
+            )}
+          </StaggeredMotion>
+        </section>
       </div>
     );
   }

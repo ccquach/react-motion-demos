@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Header from './Header';
-import FadeInUp from './FadeInUp';
+import FadeInUp from './Animations/FadeInUp';
 import BackButton from './BackButton';
 
 const Description = styled.p`
@@ -16,9 +16,9 @@ const Product = ({ location }) => {
   return (
     <section>
       <BackButton location="/products">Products</BackButton>
-      <FadeInUp>
-        <div>
-          <Header align="left">{product.name}</Header>
+      <div>
+        <Header align="left">{product.name}</Header>
+        <FadeInUp>
           <Description>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
             expedita voluptas necessitatibus tenetur, cupiditate voluptates
@@ -29,8 +29,8 @@ const Product = ({ location }) => {
             repellendus illo eos amet, architecto ipsam velit rem doloribus
             veniam cumque impedit.
           </Description>
-        </div>
-      </FadeInUp>
+        </FadeInUp>
+      </div>
     </section>
   );
 };
